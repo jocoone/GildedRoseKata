@@ -21,14 +21,7 @@ export class GildedRose {
         this.updateItemQuality(item, 1);
       }
       if (item.name == BACKSTAGE_PASS) {
-        this.updateItemQuality(item, 1);
-
-        if (item.sellIn < 11) {
-          this.updateItemQuality(item, 1);
-        }
-        if (item.sellIn < 6) {
-          this.updateItemQuality(item, 1);
-        }
+        this.updateBackstagePassQuality(item);
       }
       if (item.name != SULFURAS) {
         item.sellIn = item.sellIn - 1;
@@ -53,6 +46,17 @@ export class GildedRose {
     const newQuality = item.quality + qualityOffset;
     if (newQuality >= 0 && newQuality <= 50) {
       item.quality = item.quality + qualityOffset;
+    }
+  }
+
+  private updateBackstagePassQuality(item: Item) {
+    this.updateItemQuality(item, 1);
+
+    if (item.sellIn < 11) {
+      this.updateItemQuality(item, 1);
+    }
+    if (item.sellIn < 6) {
+      this.updateItemQuality(item, 1);
     }
   }
 
