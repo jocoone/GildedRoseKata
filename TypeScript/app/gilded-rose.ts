@@ -30,7 +30,7 @@ export class GildedRose {
     const isExpired = item.sellIn < 1;
 
     if (doesDecrease) {
-      const decreaseRate = this.getDecreaseRate(item);
+      const decreaseRate = GildedRose.getDecreaseRate(item);
       const decrease = isExpired ? 2 * decreaseRate : decreaseRate;
       this.adjustItemQuality(item, decrease);
     }
@@ -45,7 +45,7 @@ export class GildedRose {
 
   private adjustItemQuality(item: Item, qualityOffset: number) {
     const updatedQuality = item.quality + qualityOffset;
-    item.quality = this.roundQuality(updatedQuality);
+    item.quality = GildedRose.roundQuality(updatedQuality);
   }
 
   private updateBackstagePassQuality(item: Item) {
@@ -58,21 +58,17 @@ export class GildedRose {
       this.adjustItemQuality(item, 1);
     }
     if (item.sellIn < 1) {
-      this.resetQuality(item);
+      item.quality = 0;
     }
   }
 
-  private getDecreaseRate(item: Item) {
+  private static getDecreaseRate(item: Item) {
     return item.name === CONJURED ? -2 : -1;
   }
 
-  private roundQuality(quality: number) {
+  private static roundQuality(quality: number) {
     if (quality < 0) return 0;
     else if (quality > 50) return 50;
     return quality;
-  }
-
-  private resetQuality(item: Item) {
-    item.quality = 0;
   }
 }
