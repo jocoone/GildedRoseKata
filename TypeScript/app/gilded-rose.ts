@@ -14,10 +14,8 @@ export class GildedRose {
   updateQuality() {
     for (let item of this.items) {
       if (item.name != AGED_BRIE && item.name != BACKSTAGE_PASS) {
-        if (item.quality > 0) {
-          if (item.name != SULFURAS) {
-            this.updateItemQuality(item, -1);
-          }
+        if (item.name != SULFURAS) {
+          this.updateItemQuality(item, -1);
         }
       } else {
         this.updateItemQuality(item, 1);
@@ -36,10 +34,8 @@ export class GildedRose {
       if (item.sellIn < 0) {
         if (item.name != AGED_BRIE) {
           if (item.name != BACKSTAGE_PASS) {
-            if (item.quality > 0) {
-              if (item.name != SULFURAS) {
-                this.updateItemQuality(item, -1);
-              }
+            if (item.name != SULFURAS) {
+              this.updateItemQuality(item, -1);
             }
           } else {
             this.resetQuality(item);
@@ -54,7 +50,8 @@ export class GildedRose {
   }
 
   private updateItemQuality(item: Item, qualityOffset: number) {
-    if (item.quality < 50) {
+    const newQuality = item.quality + qualityOffset;
+    if (newQuality >= 0 && newQuality <= 50) {
       item.quality = item.quality + qualityOffset;
     }
   }
