@@ -13,35 +13,35 @@ export class GildedRose {
 
   updateQuality() {
     for (let item of this.items) {
-      if (item.name != AGED_BRIE && item.name != BACKSTAGE_PASS) {
-        if (item.name != SULFURAS) {
-          this.updateItemQuality(item, -1);
-        }
-      } else {
+      const isGeneralItem = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
+      if (isGeneralItem) {
+        this.updateItemQuality(item, -1);
+      }
+      if (item.name === AGED_BRIE) {
         this.updateItemQuality(item, 1);
-        if (item.name == BACKSTAGE_PASS) {
-          if (item.sellIn < 11) {
-            this.updateItemQuality(item, 1);
-          }
-          if (item.sellIn < 6) {
-            this.updateItemQuality(item, 1);
-          }
+      }
+      if (item.name == BACKSTAGE_PASS) {
+        this.updateItemQuality(item, 1);
+
+        if (item.sellIn < 11) {
+          this.updateItemQuality(item, 1);
+        }
+        if (item.sellIn < 6) {
+          this.updateItemQuality(item, 1);
         }
       }
       if (item.name != SULFURAS) {
         item.sellIn = item.sellIn - 1;
       }
       if (item.sellIn < 0) {
-        if (item.name != AGED_BRIE) {
-          if (item.name != BACKSTAGE_PASS) {
-            if (item.name != SULFURAS) {
-              this.updateItemQuality(item, -1);
-            }
-          } else {
-            this.resetQuality(item);
-          }
-        } else {
+        if (isGeneralItem) {
+          this.updateItemQuality(item, -1);
+        }
+        if (item.name === AGED_BRIE) {
           this.updateItemQuality(item, 1);
+        }
+        if (item.name === BACKSTAGE_PASS) {
+          this.resetQuality(item);
         }
       }
     }
