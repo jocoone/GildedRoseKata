@@ -1,5 +1,5 @@
-import { Item } from "../app/item";
-import { GildedRose } from "../app/gilded-rose";
+import { Item } from "@/item";
+import { GildedRose } from "@/gilded-rose";
 
 const items = [
   new Item("+5 Dexterity Vest", 10, 20), //
