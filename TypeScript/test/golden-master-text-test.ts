@@ -14,20 +14,21 @@ const items = [
   new Item("Conjured Mana Cake", 3, 6)
 ];
 
+function runFixture(days = 30) {
+  const gildedRose = new GildedRose(items);
 
-const gildedRose = new GildedRose(items);
+  let result = "OMGHAI!\n";
+  for (let i = 0; i <= days; i++) {
+    result += "-------- day " + i + " --------" + "\n";
+    result += "name, sellIn, quality" + "\n";
+    items.forEach((element) => {
+      result += element.name + ", " + element.sellIn + ", " + element.quality + "\n";
+    });
+    result += "\n";
+    gildedRose.updateQuality();
+  }
 
-let days: number = 2;
-if (process.argv.length > 2) {
-  days = +process.argv[2];
+  return result;
 }
 
-for (let i = 0; i < days; i++) {
-  console.log("-------- day " + i + " --------");
-  console.log("name, sellIn, quality");
-  items.forEach(element => {
-    console.log(element.name + " " + element.sellIn + " " + element.quality);
-  });
-  console.log();
-  gildedRose.updateQuality();
-}
+export { runFixture };
