@@ -42,7 +42,7 @@ export class GildedRose {
               }
             }
           } else {
-            item.quality = item.quality - item.quality;
+            this.resetQuality(item);
           }
         } else {
           this.updateItemQuality(item, 1);
@@ -57,5 +57,9 @@ export class GildedRose {
     if (item.quality < 50) {
       item.quality = item.quality + qualityOffset;
     }
+  }
+
+  private resetQuality(item: Item) {
+    item.quality = item.quality - item.quality;
   }
 }
