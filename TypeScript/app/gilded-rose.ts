@@ -3,6 +3,7 @@ import { Item } from "@/item";
 const AGED_BRIE = "Aged Brie";
 const BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert";
 const SULFURAS = "Sulfuras, Hand of Ragnaros";
+const CONJURED = "Conjured Mana Cake";
 
 export class GildedRose {
   items: Array<Item>;
@@ -13,9 +14,12 @@ export class GildedRose {
 
   updateQuality() {
     for (let item of this.items) {
-      const isGeneralItem = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
-      if (isGeneralItem) {
-        this.updateItemQuality(item, -1);
+      const doesDegrade = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
+      const hasSellByDate = item.name != SULFURAS;
+
+      if (doesDegrade) {
+        const degradeRate = item.name === CONJURED ? 2 : 1;
+        this.updateItemQuality(item, -1 * degradeRate);
       }
       if (item.name === AGED_BRIE) {
         this.updateItemQuality(item, 1);
@@ -23,12 +27,13 @@ export class GildedRose {
       if (item.name == BACKSTAGE_PASS) {
         this.updateBackstagePassQuality(item);
       }
-      if (item.name != SULFURAS) {
+      if (hasSellByDate) {
         item.sellIn = item.sellIn - 1;
       }
       if (item.sellIn < 0) {
-        if (isGeneralItem) {
-          this.updateItemQuality(item, -1);
+        if (doesDegrade) {
+          const degradeRate = item.name === CONJURED ? 2 : 1;
+          this.updateItemQuality(item, -1 * degradeRate);
         }
         if (item.name === AGED_BRIE) {
           this.updateItemQuality(item, 1);
