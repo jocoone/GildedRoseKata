@@ -17,14 +17,15 @@ export class GildedRose {
       const doesDegrade = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
       const hasSellByDate = item.name != SULFURAS;
       const isExpired = item.sellIn < 1;
-      const decreaseRate = item.name === CONJURED ? -2 : -1;
 
       if (doesDegrade) {
+        const decreaseRate = this.getDecreaseRate(item);
         const decrease = isExpired ? 2 * decreaseRate : decreaseRate;
         this.updateItemQuality(item, decrease);
       }
       if (item.name === AGED_BRIE) {
-        this.updateItemQuality(item, isExpired ? 2 : 1);
+        const increase = isExpired ? 2 : 1;
+        this.updateItemQuality(item, increase);
       }
       if (item.name == BACKSTAGE_PASS) {
         this.updateBackstagePassQuality(item);
@@ -54,6 +55,10 @@ export class GildedRose {
     if (item.sellIn < 1) {
       this.resetQuality(item);
     }
+  }
+
+  private getDecreaseRate(item: Item) {
+    return item.name === CONJURED ? -2 : -1;
   }
 
   private roundQuality(quality: number) {
