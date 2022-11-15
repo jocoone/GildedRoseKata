@@ -1,4 +1,5 @@
-import { Item, GildedRose } from '../app/gilded-rose';
+import { Item } from "@/item";
+import { GildedRose } from "@/gilded-rose";
 
 const items = [
   new Item("+5 Dexterity Vest", 10, 20), //
@@ -9,24 +10,24 @@ const items = [
   new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
   new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
   new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
-  // this conjured item does not work properly yet
-  new Item("Conjured Mana Cake", 3, 6)];
+  new Item("Conjured Mana Cake", 3, 10)
+];
 
+function runFixture(days = 30) {
+  const gildedRose = new GildedRose(items);
 
-const gildedRose = new GildedRose(items);
-
-let days: number = 2;
-if (process.argv.length > 2) {
-    days = +process.argv[2];
+  let result = "OMGHAI!\n";
+  for (let i = 0; i <= days; i++) {
+    result += "-------- day " + i + " --------" + "\n";
+    result += "name, sellIn, quality" + "\n";
+    items.forEach((element) => {
+      result += element.name + ", " + element.sellIn + ", " + element.quality + "\n";
+    });
+    result += "\n";
+    gildedRose.updateQuality();
   }
 
-for (let i = 0; i < days; i++) {
-  console.log("-------- day " + i + " --------");
-  console.log("name, sellIn, quality");
-  items.forEach(element => {
-    console.log(element.name + ' ' + element.sellIn + ' ' + element.quality);
-
-  });
-  console.log();
-  gildedRose.updateQuality();
+  return result;
 }
+
+export { runFixture };
