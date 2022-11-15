@@ -21,16 +21,16 @@ export class GildedRose {
         }
       } else {
         if (item.quality < 50) {
-          item.quality = item.quality + 1;
+          this.updateItemQuality(item);
           if (item.name == BACKSTAGE_PASS) {
             if (item.sellIn < 11) {
               if (item.quality < 50) {
-                item.quality = item.quality + 1;
+                this.updateItemQuality(item);
               }
             }
             if (item.sellIn < 6) {
               if (item.quality < 50) {
-                item.quality = item.quality + 1;
+                this.updateItemQuality(item);
               }
             }
           }
@@ -52,12 +52,16 @@ export class GildedRose {
           }
         } else {
           if (item.quality < 50) {
-            item.quality = item.quality + 1;
+            this.updateItemQuality(item);
           }
         }
       }
     }
 
     return this.items;
+  }
+
+  private updateItemQuality(item) {
+    item.quality = item.quality + 1;
   }
 }
