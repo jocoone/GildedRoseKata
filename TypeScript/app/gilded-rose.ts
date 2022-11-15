@@ -45,10 +45,8 @@ export class GildedRose {
   }
 
   private updateItemQuality(item: Item, qualityOffset: number) {
-    const newQuality = item.quality + qualityOffset;
-    if (newQuality >= 0 && newQuality <= 50) {
-      item.quality = item.quality + qualityOffset;
-    }
+    const updatedQuality = item.quality + qualityOffset;
+    item.quality = this.roundQuality(updatedQuality);
   }
 
   private updateBackstagePassQuality(item: Item) {
@@ -65,7 +63,13 @@ export class GildedRose {
     }
   }
 
+  private roundQuality(quality: number) {
+    if (quality < 0) return 0;
+    else if (quality > 50) return 50;
+    return quality;
+  }
+
   private resetQuality(item: Item) {
-    item.quality = item.quality - item.quality;
+    item.quality = 0;
   }
 }
