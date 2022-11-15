@@ -14,11 +14,11 @@ export class GildedRose {
 
   updateQuality() {
     for (let item of this.items) {
-      const doesDegrade = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
+      const doesDecrease = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
       const hasSellByDate = item.name != SULFURAS;
       const isExpired = item.sellIn < 1;
 
-      if (doesDegrade) {
+      if (doesDecrease) {
         const decreaseRate = this.getDecreaseRate(item);
         const decrease = isExpired ? 2 * decreaseRate : decreaseRate;
         this.updateItemQuality(item, decrease);
