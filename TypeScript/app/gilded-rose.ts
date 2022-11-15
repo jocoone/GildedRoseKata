@@ -16,28 +16,21 @@ export class GildedRose {
     for (let item of this.items) {
       const doesDegrade = item.name !== AGED_BRIE && item.name !== BACKSTAGE_PASS && item.name !== SULFURAS;
       const hasSellByDate = item.name != SULFURAS;
+      const isExpired = item.sellIn < 1;
+      const decreaseRate = item.name === CONJURED ? -2 : -1;
 
       if (doesDegrade) {
-        const degradeRate = item.name === CONJURED ? 2 : 1;
-        this.updateItemQuality(item, -1 * degradeRate);
+        const decrease = isExpired ? 2 * decreaseRate : decreaseRate;
+        this.updateItemQuality(item, decrease);
       }
       if (item.name === AGED_BRIE) {
-        this.updateItemQuality(item, 1);
+        this.updateItemQuality(item, isExpired ? 2 : 1);
       }
       if (item.name == BACKSTAGE_PASS) {
         this.updateBackstagePassQuality(item);
       }
       if (hasSellByDate) {
         item.sellIn = item.sellIn - 1;
-      }
-      if (item.sellIn < 0) {
-        if (doesDegrade) {
-          const degradeRate = item.name === CONJURED ? 2 : 1;
-          this.updateItemQuality(item, -1 * degradeRate);
-        }
-        if (item.name === AGED_BRIE) {
-          this.updateItemQuality(item, 1);
-        }
       }
     }
 
