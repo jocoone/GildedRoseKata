@@ -33,9 +33,6 @@ export class GildedRose {
         if (item.name === AGED_BRIE) {
           this.updateItemQuality(item, 1);
         }
-        if (item.name === BACKSTAGE_PASS) {
-          this.resetQuality(item);
-        }
       }
     }
 
@@ -57,6 +54,9 @@ export class GildedRose {
     }
     if (item.sellIn < 6) {
       this.updateItemQuality(item, 1);
+    }
+    if (item.sellIn < 1) {
+      this.resetQuality(item);
     }
   }
 
